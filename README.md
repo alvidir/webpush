@@ -1,2 +1,2 @@
-# push-notification
-Push notification server
+# webpush
+Web push notifications microservice
