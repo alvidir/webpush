@@ -2,11 +2,11 @@ version: '3.8'
 
 services:
     backend:
-        container_name: webpush-rest
+        container_name: webpush
         image: webpush/backend:0.1.0
         restart: always
         ports:
             - 8080:8080
-            - 8081:8081
+            - 9090:9090
         networks: 
             - database
