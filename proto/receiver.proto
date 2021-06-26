@@ -1,0 +1,21 @@
+syntax = "proto3";
+option go_package = "github.com/alvidir/webpush/proto";
+
+package proto;
+import "notification.proto"
+
+// PushRequest for the receiver service
+message PushRequest {
+  string user_id = 1;   // user the notification will be sent to
+  string app_id = 2;    // application id the notification comes from
+  Notification data = 3;
+}
+
+// PushResponse from the receiver service
+message PushResponse {
+  string notification_id = 1;
+}
+
+service Receiver {
+  rpc Push(PushRequest) returns (PushResponse);
+}

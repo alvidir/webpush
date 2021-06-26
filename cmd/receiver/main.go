@@ -7,10 +7,10 @@ import (
 )
 
 const (
-	envPublicPortKey  = "PUBLIC_SERVICE_PORT"
-	envPrivatePortKey = "PRIVATE_SERVICE_PORT"
-	envNetwKey        = "SERVICE_NETW"
-	envMongoURI       = "MONGO_URI"
+	envPortKey    = "SERVICE_PORT"
+	envIntPortKey = "INTERNAL_PORT"
+	envNetwKey    = "SERVER_NETW"
+	envMongoURI   = "MONGO_URI"
 )
 
 func setup() (err error) {
