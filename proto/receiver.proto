@@ -2,7 +2,7 @@ syntax = "proto3";
 option go_package = "github.com/alvidir/webpush/proto";
 
 package proto;
-import "notification.proto"
+import "proto/notification.proto";
 
 // PushRequest for the receiver service
 message PushRequest {

@@ -4,9 +4,9 @@ REPO=alvidir
 PROJECT=webpush
 
 proto:
-	protoc --go_out=plugins=grpc:server --go_opt=paths=source_relative proto/notification.proto
-	protoc --go_out=plugins=grpc:server --go_opt=paths=source_relative proto/receiver.proto
-	protoc --go_out=plugins=grpc:server --go_opt=paths=source_relative proto/sender.proto
+	protoc --go_out=plugins=grpc:. --go_opt=paths=source_relative proto/notification.proto
+	protoc --go_out=plugins=grpc:. --go_opt=paths=source_relative proto/receiver.proto
+	protoc --go_out=plugins=grpc:. --go_opt=paths=source_relative proto/sender.proto
 
 build:
 	podman build -t ${REPO}/${PROJECT}:${VERSION}-envoy -f ./docker/envoy/dockerfile .
@@ -22,3 +22,6 @@ undeploy:
 
 test:
 	go test -v -race ./...
+
+gomod:
+	go mod tidy

@@ -3,9 +3,17 @@ option go_package = "github.com/alvidir/webpush/proto";
 
 package proto;
 
+enum Urgency {
+    LOW = 0;
+    NORMAL = 1;
+    HIGH = 2;
+    CRITICAL = 3;
+}
+
 //  Notification's metadata
 message Metadata {
     int64 created_at = 1; // UNIX time
+    Urgency urgency = 2;
 }
 
 // Notification information
