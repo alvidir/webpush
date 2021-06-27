@@ -11,10 +11,9 @@ import (
 )
 
 const (
-	envAddrKey     = "SERVER_ADDR"
-	envNetwKey     = "SERVER_NETW"
-	envPrivAddrKey = "PRIVATE_ADDR"
-	envDataURI     = "MONGO_URI"
+	envAddrKey = "SERVER_ADDR"
+	envNetwKey = "SERVER_NETW"
+	envDataURI = "MONGO_URI"
 
 	errEnvNotFound = "environment variable not found"
 	errMongoSetup  = "mongodb init has failed"
