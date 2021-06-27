@@ -3,11 +3,11 @@ module github.com/alvidir/webpush
 go 1.16
 
 require (
+	github.com/alvidir/go-util v0.0.0-20210626173017-1427087e8112
 	github.com/golang/protobuf v1.5.2
 	github.com/joho/godotenv v1.3.0
-	golang.org/x/net v0.0.0-20200202094626-16171245cfb2 // indirect
-	golang.org/x/sys v0.0.0-20190531175056-4c3a928424d2 // indirect
-	golang.org/x/text v0.3.5 // indirect
+	github.com/sirupsen/logrus v1.8.1
+	go.mongodb.org/mongo-driver v1.5.3
 	google.golang.org/grpc v1.38.0
 	google.golang.org/protobuf v1.26.0
 )
