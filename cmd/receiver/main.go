@@ -17,6 +17,7 @@ import (
 const (
 	envAddrKey = "SERVER_ADDR"
 	envNetwKey = "SERVER_NETW"
+	envSendKey = "SENDER_ADDR"
 	envDataURI = "MONGO_URI"
 
 	errEnvNotFound = "environment variable not found"
@@ -26,6 +27,7 @@ const (
 var (
 	serviceAddr = ":8080"
 	serviceNetw = "tcp"
+	senderAddr  = ""
 	mongoConn   = webpush.MongoConn{}
 	log         = webpush.NewLogger()
 	rootCtx     = context.Background()
@@ -60,6 +62,12 @@ func init() {
 	} else {
 		serviceNetw = env
 	}
+
+	if env, err := util.LookupNempEnv(envSendKey); err != nil {
+		log.WithField("key", envSendKey).Panic(errEnvNotFound)
+	} else {
+		senderAddr = env
+	}
 }
 
 func main() {
@@ -72,8 +80,9 @@ func main() {
 
 	grpcServer := grpc.NewServer()
 	receiverServer := webpush.ReceiverServer{
-		Log: log,
-		DB:  &mongoConn,
+		Log:    log,
+		DB:     &mongoConn,
+		Sender: webpush.Sender(senderAddr),
 	}
 
 	pb.RegisterReceiverServer(grpcServer, &receiverServer)
