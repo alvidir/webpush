@@ -5,13 +5,11 @@ PROJECT=webpush
 
 proto:
 	protoc --go_out=plugins=grpc:. --go_opt=paths=source_relative proto/notification.proto
-	protoc --go_out=plugins=grpc:. --go_opt=paths=source_relative proto/receiver.proto
-	protoc --go_out=plugins=grpc:. --go_opt=paths=source_relative proto/sender.proto
+	protoc --go_out=plugins=grpc:. --go_opt=paths=source_relative proto/notifier.proto
 
 build:
-	podman build -t ${REPO}/${PROJECT}:${VERSION}-envoy -f ./docker/envoy/dockerfile .
-	podman build -t ${REPO}/${PROJECT}:${VERSION}-sender -f ./docker/sender/dockerfile .
-	podman build -t ${REPO}/${PROJECT}:${VERSION}-receiver -f ./docker/receiver/dockerfile .
+	podman build -t ${REPO}/${PROJECT}:${VERSION}-subscriber -f ./docker/subscriber/dockerfile .
+	podman build -t ${REPO}/${PROJECT}:${VERSION}-notifier -f ./docker/notifier/dockerfile .
 
 deploy:
 	podman-compose -f docker-compose.yaml up --remove-orphans -d

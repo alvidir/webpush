@@ -4,7 +4,7 @@ go 1.16
 
 require (
 	github.com/alvidir/go-util v0.0.0-20210626173017-1427087e8112
-	github.com/golang/protobuf v1.5.2
+	github.com/golang/protobuf v1.5.2 // indirect
 	github.com/joho/godotenv v1.3.0
 	github.com/sirupsen/logrus v1.8.1
 	go.mongodb.org/mongo-driver v1.5.3

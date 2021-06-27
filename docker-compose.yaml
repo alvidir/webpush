@@ -1,48 +1,21 @@
 version: '3.8'
 
-services:
-    ### ENVOY PROXY ###
-    # envoy:
-    #     container_name: webpush-envoy
-    #     image: alvidir/webpush:0.1.0-envoy
-    #     restart: always
-    #     ports:
-    #         - "5050:5050"
-    #         - "9901:9901"
-    #     networks:
-    #         - ingress
-    
+services:  
     ### BACKEND ###        
-    webpush-sender:
-        container_name: webpush-sender
-        image: alvidir/webpush:0.1.0-sender
+    webpush-notifier:
+        container_name: webpush-notifier
+        image: alvidir/webpush:0.1.0-notifier
         restart: always
         ports:
             - 8080:8080
-        networks: 
-            - webpush
         env_file:
             - .env
 
-    webpush-receiver:
-        container_name: webpush-receiver
-        image: alvidir/webpush:0.1.0-receiver
+    webpush-subscriber:
+        container_name: webpush-subscriber
+        image: alvidir/webpush:0.1.0-subscriber
         restart: always
         ports:
-            - 8081:8080
-        networks: 
-            - webpush
+            - 8080:8080
         env_file:
             - .env
-
-networks:
-    # Ingress network works as bridge between envoyproxy and the available services
-    # ingress:
-    #     name: ingress
-    #     driver: bridge
-    
-    # webpush network is the bridge between both sides of the backend receiver and sender
-    webpush:
-        name: webpush
-        driver: bridge
-    

@@ -2,23 +2,19 @@ package main
 
 import (
 	"context"
-	"net"
 
-	util "github.com/alvidir/go-util"
+	"github.com/alvidir/go-util"
 	"github.com/alvidir/webpush"
-	pb "github.com/alvidir/webpush/proto"
 	"github.com/joho/godotenv"
-	"github.com/sirupsen/logrus"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
-	"google.golang.org/grpc"
 )
 
 const (
-	envAddrKey = "SERVER_ADDR"
-	envNetwKey = "SERVER_NETW"
-	envSendKey = "SENDER_ADDR"
-	envDataURI = "MONGO_URI"
+	envAddrKey     = "SERVER_ADDR"
+	envNetwKey     = "SERVER_NETW"
+	envPrivAddrKey = "PRIVATE_ADDR"
+	envDataURI     = "MONGO_URI"
 
 	errEnvNotFound = "environment variable not found"
 	errMongoSetup  = "mongodb init has failed"
@@ -27,14 +23,13 @@ const (
 var (
 	serviceAddr = ":8080"
 	serviceNetw = "tcp"
-	senderAddr  = ""
 	mongoConn   = webpush.MongoConn{}
 	log         = webpush.NewLogger()
 	rootCtx     = context.Background()
 )
 
 func init() {
-	log = log.WithField("service", "receiver")
+	log = log.WithField("service", "subscriber")
 	if err := godotenv.Load(); err != nil {
 		log.WithError(err).Warn("dotenv has failed")
 	}
@@ -62,39 +57,9 @@ func init() {
 	} else {
 		serviceNetw = env
 	}
-
-	if env, err := util.LookupNempEnv(envSendKey); err != nil {
-		log.WithField("key", envSendKey).Panic(errEnvNotFound)
-	} else {
-		senderAddr = env
-	}
 }
 
 func main() {
+	defer log.Info("service finished")
 	defer mongoConn.Disconnect(rootCtx)
-
-	lis, err := net.Listen(serviceNetw, serviceAddr)
-	if err != nil {
-		log.WithError(err).Panic("failed to listen")
-	}
-
-	grpcServer := grpc.NewServer()
-	receiverServer := webpush.ReceiverServer{
-		Log:    log,
-		DB:     &mongoConn,
-		Sender: webpush.Sender(senderAddr),
-	}
-
-	pb.RegisterReceiverServer(grpcServer, &receiverServer)
-
-	log.WithFields(logrus.Fields{
-		"network": serviceNetw,
-		"address": serviceAddr,
-	}).Info("service setup complete: ready to serve")
-
-	if err := grpcServer.Serve(lis); err != nil {
-		log.WithError(err).Panic("failed to serve")
-	}
-
-	log.Info("service finished")
 }

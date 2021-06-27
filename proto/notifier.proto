@@ -4,18 +4,17 @@ option go_package = "github.com/alvidir/webpush/proto";
 package proto;
 import "proto/notification.proto";
 
-// PushRequest for the receiver service
+// PushRequest for the notifier service
 message PushRequest {
   string user_id = 1;   // user the notification will be sent to
-  string app_id = 2;    // application id the notification comes from
   Notification data = 3;
 }
 
-// PushResponse from the receiver service
+// PushResponse from the notifier service
 message PushResponse {
   string notification_id = 1;
 }
 
-service Receiver {
+service Notifier {
   rpc Push(PushRequest) returns (PushResponse);
 }

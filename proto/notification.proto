@@ -12,8 +12,9 @@ enum Urgency {
 
 //  Notification's metadata
 message Metadata {
-    int64 created_at = 1; // UNIX time
-    Urgency urgency = 2;
+    string app_id = 1;    // application id the notification comes from
+    int64 created_at = 2; // UNIX time
+    Urgency urgency = 3;
 }
 
 // Notification information
