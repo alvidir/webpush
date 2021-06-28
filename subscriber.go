@@ -1,14 +1,48 @@
 package webpush
 
 import (
-	pb "github.com/alvidir/webpush/proto"
+	"net/http"
+
+	"github.com/gorilla/mux"
+	"github.com/sirupsen/logrus"
 )
 
-// subscriberDBConn represents a database connection for the subscriber service
-type subscriberDBConn interface {
-	// InsertSubscriber() (string, error)
-	// DeleteSubscriber() error
-	UpdateNotification(*pb.Notification) (string, error)
-	ListNotifications(string, uint) ([]*pb.Notification, error)
-	ClearNotifications(string) (int, error)
+// NewSubscriberService returns a new server instance
+func NewSubscriberService(n NotificationsRepository, s SubscriptionsRepository, l *logrus.Entry) http.Handler {
+	server := &SubscriberServer{
+		Router:                  mux.NewRouter(),
+		NotificationsRepository: n,
+		SubscriptionsRepository: s,
+		Log:                     l,
+	}
+
+	server.Init()
+	return server
+}
+
+// SubscriberServer implements all these routes required by the subscriber service
+type SubscriberServer struct {
+	*mux.Router
+	NotificationsRepository NotificationsRepository
+	SubscriptionsRepository SubscriptionsRepository
+	Log                     *logrus.Entry
+}
+
+// Init initializes all the enpoints to the server's router
+func (server *SubscriberServer) Init() {
+	server.HandleFunc("/subscribe", server.Subscribe).Methods(http.MethodPost)
+	server.HandleFunc("/u/{ID:[a-zA-Z0-9_]+}", server.Unsubscribe).Methods(http.MethodDelete)
+	server.HandleFunc("/u/{ID:[a-zA-Z0-9_]+}/notifications", server.List).Methods(http.MethodGet)
+}
+
+func (server *SubscriberServer) Subscribe(w http.ResponseWriter, r *http.Request) {
+
+}
+
+func (server *SubscriberServer) Unsubscribe(w http.ResponseWriter, r *http.Request) {
+
+}
+
+func (server *SubscriberServer) List(w http.ResponseWriter, r *http.Request) {
+
 }

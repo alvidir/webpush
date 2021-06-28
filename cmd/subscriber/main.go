@@ -2,10 +2,13 @@ package main
 
 import (
 	"context"
+	"net"
+	"net/http"
 
 	"github.com/alvidir/go-util"
 	"github.com/alvidir/webpush"
 	"github.com/joho/godotenv"
+	"github.com/sirupsen/logrus"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
@@ -59,6 +62,25 @@ func init() {
 }
 
 func main() {
-	defer log.Info("service finished")
 	defer mongoConn.Disconnect(rootCtx)
+
+	lis, err := net.Listen(serviceNetw, serviceAddr)
+	if err != nil {
+		log.WithError(err).Panic("failed to listen")
+	}
+
+	server := webpush.NewSubscriberService(
+		&mongoConn,
+		&mongoConn,
+		log,
+	)
+
+	log.WithFields(logrus.Fields{
+		"network": serviceNetw,
+		"address": serviceAddr,
+	}).Info("service setup complete: ready to serve")
+
+	if err = http.Serve(lis, server); err != nil {
+		log.WithError(err).Panic("failed to serve")
+	}
 }

@@ -72,12 +72,13 @@ func main() {
 	}
 
 	grpcServer := grpc.NewServer()
-	notifierServer := webpush.NotifierServer{
-		Log: log,
-		DB:  &mongoConn,
-	}
+	notifierServer := webpush.NewNotifierService(
+		&mongoConn,
+		&mongoConn,
+		log,
+	)
 
-	pb.RegisterNotifierServer(grpcServer, &notifierServer)
+	pb.RegisterNotifierServer(grpcServer, notifierServer)
 
 	log.WithFields(logrus.Fields{
 		"network": serviceNetw,
@@ -87,6 +88,4 @@ func main() {
 	if err := grpcServer.Serve(lis); err != nil {
 		log.WithError(err).Panic("failed to serve")
 	}
-
-	log.Info("service finished")
 }
