@@ -16,6 +16,7 @@ type NotificationCtrl interface {
 	GetMetadata() MetadataCtrl
 }
 
+// A SubscriberCtrl represents a subscriber instance
 type SubscriberCtrl interface {
 	GetUserId() string
 }

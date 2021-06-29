@@ -7,6 +7,7 @@ import (
 
 	"github.com/alvidir/go-util"
 	"github.com/alvidir/webpush"
+	"github.com/gorilla/mux"
 	"github.com/joho/godotenv"
 	"github.com/sirupsen/logrus"
 	"go.mongodb.org/mongo-driver/mongo"
@@ -70,6 +71,7 @@ func main() {
 	}
 
 	server := webpush.SubscriberServer{
+		Router:                  mux.NewRouter(),
 		NotificationsRepository: &mongoConn,
 		SubscriptionsRepository: &mongoConn,
 		Log:                     log,
