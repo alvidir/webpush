@@ -7,19 +7,6 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-// NewSubscriberService returns a new server instance
-func NewSubscriberService(n NotificationsRepository, s SubscriptionsRepository, l *logrus.Entry) http.Handler {
-	server := &SubscriberServer{
-		Router:                  mux.NewRouter(),
-		NotificationsRepository: n,
-		SubscriptionsRepository: s,
-		Log:                     l,
-	}
-
-	server.Init()
-	return server
-}
-
 // SubscriberServer implements all these routes required by the subscriber service
 type SubscriberServer struct {
 	*mux.Router

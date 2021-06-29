@@ -72,13 +72,13 @@ func main() {
 	}
 
 	grpcServer := grpc.NewServer()
-	notifierServer := webpush.NewNotifierService(
-		&mongoConn,
-		&mongoConn,
-		log,
-	)
+	notifierServer := webpush.NotifierServer{
+		NotificationsRepository: &mongoConn,
+		SubscriptionsRepository: &mongoConn,
+		Log:                     log,
+	}
 
-	pb.RegisterNotifierServer(grpcServer, notifierServer)
+	pb.RegisterNotifierServer(grpcServer, &notifierServer)
 
 	log.WithFields(logrus.Fields{
 		"network": serviceNetw,

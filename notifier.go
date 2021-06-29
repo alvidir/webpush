@@ -12,15 +12,6 @@ type NotifierService interface {
 	Push(ctx context.Context, in *pb.PushRequest) (out *pb.PushResponse, err error)
 }
 
-// NewNotifierService returns a new server instance
-func NewNotifierService(n NotificationsRepository, s SubscriptionsRepository, l *logrus.Entry) NotifierService {
-	return &NotifierServer{
-		NotificationsRepository: n,
-		SubscriptionsRepository: s,
-		Log:                     l,
-	}
-}
-
 // NotifierServer implements all these grpc methods required by the notifier service
 type NotifierServer struct {
 	pb.UnimplementedNotifierServer

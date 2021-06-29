@@ -69,12 +69,13 @@ func main() {
 		log.WithError(err).Panic("failed to listen")
 	}
 
-	server := webpush.NewSubscriberService(
-		&mongoConn,
-		&mongoConn,
-		log,
-	)
+	server := webpush.SubscriberServer{
+		NotificationsRepository: &mongoConn,
+		SubscriptionsRepository: &mongoConn,
+		Log:                     log,
+	}
 
+	server.Init()
 	log.WithFields(logrus.Fields{
 		"network": serviceNetw,
 		"address": serviceAddr,
