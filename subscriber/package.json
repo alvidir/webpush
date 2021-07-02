@@ -2,7 +2,7 @@
   "name": "webpush",
   "version": "1.0.0",
   "description": "Web push notifications microservice",
-  "main": "app.ts",
+  "main": "main.ts",
   "scripts": {
     "start": "node src/app.ts",
     "build": "tsc -p . --outDir ./build"
