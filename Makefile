@@ -1,11 +1,12 @@
 # Global about the project
-VERSION=0.1.0
+VERSION=1.0.0
 REPO=alvidir
 PROJECT=webpush
 
 proto:
-	protoc --go_out=plugins=grpc:. --go_opt=paths=source_relative proto/notification.proto
-	protoc --go_out=plugins=grpc:. --go_opt=paths=source_relative proto/notifier.proto
+	protoc -I=. ./proto/*.proto \
+	--plugin ./node_modules/.bin/protoc-gen-grpc-web \
+  	--js_out=import_style=commonjs,binary:./notifier/src
 
 build:
 	podman build -t ${REPO}/${PROJECT}:${VERSION}-subscriber -f ./docker/subscriber/dockerfile .
@@ -17,9 +18,3 @@ deploy:
 
 undeploy:
 	podman-compose -f docker-compose.yaml down
-
-test:
-	go test -v -race ./...
-
-gomod:
-	go mod tidy

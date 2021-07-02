@@ -4,7 +4,7 @@ services:
     ### BACKEND ###        
     webpush-notifier:
         container_name: webpush-notifier
-        image: alvidir/webpush:0.1.0-notifier
+        image: alvidir/webpush:1.0.0-notifier
         restart: always
         ports:
             - 8080:8080
@@ -13,7 +13,7 @@ services:
 
     webpush-subscriber:
         container_name: webpush-subscriber
-        image: alvidir/webpush:0.1.0-subscriber
+        image: alvidir/webpush:1.0.0-subscriber
         restart: always
         ports:
             - 8080:8080
