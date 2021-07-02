@@ -4,6 +4,7 @@ go 1.16
 
 require (
 	github.com/alvidir/go-util v0.0.0-20210626173017-1427087e8112
+	github.com/golang-jwt/jwt v3.2.1+incompatible
 	github.com/golang/protobuf v1.5.2 // indirect
 	github.com/gorilla/mux v1.8.0
 	github.com/joho/godotenv v1.3.0

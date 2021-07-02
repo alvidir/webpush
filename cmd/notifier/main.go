@@ -19,6 +19,8 @@ const (
 	envNetwKey = "SERVER_NETW"
 	envSendKey = "subscriber_ADDR"
 	envDataURI = "MONGO_URI"
+	envPublKey = "PUBLIC_KEY"
+	envPrivKey = "PRIVATE_KEY"
 
 	errEnvNotFound = "environment variable not found"
 	errMongoSetup  = "mongodb init has failed"
@@ -30,6 +32,8 @@ var (
 	mongoConn   = webpush.MongoConn{}
 	log         = webpush.NewLogger()
 	rootCtx     = context.Background()
+	publicKey   = ""
+	privateKey  = ""
 )
 
 func init() {
@@ -61,6 +65,18 @@ func init() {
 	} else {
 		serviceNetw = env
 	}
+
+	if env, err := util.LookupNempEnv(envPrivKey); err != nil {
+		log.WithField("key", envPrivKey).Panic(errEnvNotFound)
+	} else {
+		privateKey = env
+	}
+
+	if env, err := util.LookupNempEnv(envPublKey); err != nil {
+		log.WithField("key", envPublKey).Panic(errEnvNotFound)
+	} else {
+		publicKey = env
+	}
 }
 
 func main() {
@@ -76,6 +92,8 @@ func main() {
 		NotificationsRepository: &mongoConn,
 		SubscriptionsRepository: &mongoConn,
 		Log:                     log,
+		Private:                 privateKey,
+		Public:                  publicKey,
 	}
 
 	pb.RegisterNotifierServer(grpcServer, &notifierServer)

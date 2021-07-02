@@ -18,6 +18,8 @@ type NotifierServer struct {
 	NotificationsRepository NotificationsRepository
 	SubscriptionsRepository SubscriptionsRepository
 	Log                     *logrus.Entry
+	Private                 string
+	Public                  string
 }
 
 func (server *NotifierServer) Push(ctx context.Context, in *pb.PushRequest) (out *pb.PushResponse, err error) {

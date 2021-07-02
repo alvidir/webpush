@@ -6,8 +6,8 @@ import (
 
 // SubscriptionsRepository represents a database connection for subscriber's management
 type SubscriptionsRepository interface {
-	InsertSubscriber(SubscriberCtrl) (string, error)
-	DeleteSubscriber(string) error
+	InsertSubscription(SubscriptionCtrl) (string, error)
+	DeleteSubscription(string) error
 }
 
 // NotificationsRepository represents a database connection for the notifier service
@@ -38,10 +38,10 @@ func (client *MongoConn) DeleteNotification(id string) error {
 	return nil
 }
 
-func (client *MongoConn) InsertSubscriber(sub SubscriberCtrl) (string, error) {
+func (client *MongoConn) InsertSubscription(sub SubscriptionCtrl) (string, error) {
 	return "", nil
 }
 
-func (client *MongoConn) DeleteSubscriber(id string) error {
+func (client *MongoConn) DeleteSubscription(id string) error {
 	return nil
 }
