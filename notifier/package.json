@@ -4,7 +4,7 @@
   "description": "Web push notifications microservice",
   "main": "main.ts",
   "scripts": {
-    "start": "node src/app.ts",
+    "start": "node src/main.ts",
     "build": "tsc -p . --outDir ./build"
   },
   "repository": {

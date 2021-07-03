@@ -4,7 +4,7 @@
   "description": "Web push notifications microservice",
   "main": "main.ts",
   "scripts": {
-    "start": "node src/app.ts",
+    "start": "ts-node src/main.ts",
     "build": "tsc -p . --outDir ./build"
   },
   "repository": {
@@ -25,6 +25,12 @@
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
-    "typescript": "^4.3.5"
+    "typescript": "^4.3.5",
+    "web-push": "^3.4.5"
+  },
+  "dependencies": {
+    "@types/web-push": "^3.3.2",
+    "mongodb": "^3.6.9",
+    "ts-node": "^10.0.0"
   }
 }
