@@ -15,10 +15,10 @@ proto:
 	--ts_out=import_style=typescript,binary:./src
 	
 build:
-	podman build -t ${REPO}/${PROJECT}:${VERSION} -f ./docker/dockerfile .
+	podman build -t ${REPO}/${PROJECT}:${VERSION} -f ./dockerfile .
 
 deploy:
-	podman-compose -f docker-compose.yaml up --remove-orphans -d
+	podman-compose -f docker-compose.yaml up --remove-orphans
 	# delete -d in order to see output logs
 
 undeploy:

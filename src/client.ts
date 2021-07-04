@@ -10,7 +10,7 @@ const notif: Notification = new Notification()
                                 .setBody("This notification comes from nowhere");
 
 const request: PushRequest = new PushRequest()
-                                .setUserId("60e1ee92965f28f7a45de03d")
+                                .setUserId("60e210012182da59ec84110c")
                                 .setData(notif);
 
 client.push(request, function(err: grpc.ServiceError | null, response: PushResponse) {

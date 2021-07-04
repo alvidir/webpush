@@ -2,11 +2,11 @@ version: '3.8'
 
 services:  
     ### BACKEND ###        
-    webpush-notifier:
-        container_name: webpush-notifier
+    notifier:
+        container_name: notifier
         image: alvidir/webpush-notifier:1.0.0
         restart: always
         ports:
-            - 8080:8080
+            - 9090:8080
         env_file:
             - .env

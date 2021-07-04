@@ -21,10 +21,6 @@ RUN npm run build
 # start new image from scratch
 FROM node:lts-alpine
 
-LABEL maintainer="Hector Morales <hector.morales.carnice@gmail.com>"
-LABEL repo-url="https://github.com/alvidir/unsplash-api"
-LABEL version="alpha"
-
 RUN apk --no-cache add ca-certificates
 RUN apk --no-cache add nodejs
 
@@ -33,4 +29,4 @@ COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/build/* ./
 
 RUN npm rebuild
-CMD ["node", "app.js"]
+CMD ["node", "main.js"]
