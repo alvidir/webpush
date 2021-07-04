@@ -2,7 +2,29 @@ syntax = "proto3";
 option go_package = "github.com/alvidir/webpush/proto";
 
 package proto;
-import "proto/notification.proto";
+
+enum Urgency {
+    LOW = 0;
+    NORMAL = 1;
+    HIGH = 2;
+    CRITICAL = 3;
+}
+
+//  Notification's metadata
+message Metadata {
+    string origin = 2;    // application id the notification comes from
+    int64 created_at = 3; // UNIX time
+    Urgency urgency = 4;
+}
+
+// Notification information
+message Notification {
+    string title = 1;
+    string body = 2;
+    string url = 3;
+    string icon_url = 4;
+    Metadata meta = 5;
+}
 
 // PushRequest for the notifier service
 message PushRequest {

@@ -5,10 +5,10 @@ RUN apt update
 WORKDIR /app
 
 # installing dependencies
-COPY notifier/package.json ./
+COPY ./package.json ./
 RUN npm --verbose install
 
-COPY ./* .
+COPY . .
 # Index.ts may does nothing by itself
 # However its presence in the project's root ensures that the build script
 # will keep the directory structure of this project.
@@ -31,7 +31,6 @@ RUN apk --no-cache add nodejs
 WORKDIR /app
 COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/build/* ./
-COPY --from=builder /app/.env ./
 
 RUN npm rebuild
 CMD ["node", "app.js"]
