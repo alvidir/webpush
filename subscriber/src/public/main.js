@@ -1,8 +1,3 @@
-Notification.requestPermission(function(status) {
-    console.log('Notification permission status:', status);
-});
-
-
 const urlBase64ToArrayBuffer = (base64String) => {
     const padding = "=".repeat((4 - base64String.length % 4) % 4);
     const base64 = (base64String + padding)
@@ -20,7 +15,7 @@ const urlBase64ToArrayBuffer = (base64String) => {
 }
 
 const getPublicKey = async () => {
-    const response = await fetch("/vapid", {
+    const response = await fetch("/key", {
         method: 'GET',
     });
 
@@ -42,9 +37,12 @@ const subscribe = async () => {
         applicationServerKey: PUBLIC_VAPID_KEY,
     });
 
+    const data = JSON.stringify(subscription)
+    console.log(data);
+    
     fetch("/subscribe", {
         method: 'POST',
-        body: JSON.stringify(subscription),
+        body: data,
         headers: {
             "Content-Type": "application/json",
         }

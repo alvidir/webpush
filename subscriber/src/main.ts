@@ -2,16 +2,22 @@ import dotenv from "dotenv";
 dotenv.config(); // init environment variables from .env file
 
 import express from "express";
+import {Router} from "express";
 import path from "path";
-import router from "./routes"
+import {subscribe, unsubscribe, listNotifications, publicVapidKey} from "./service";
+
+let router = Router();
+router.post("/subscribe", subscribe);
+router.delete("/u/:id", unsubscribe);
+router.get("/u/:id/notifications", listNotifications);
+router.get("/key", publicVapidKey);
+
 
 const app = express();
 app.use(express.json()); // unmarshal json body
-app.use(router); // service routes
-
-// Static contents
+app.use(router); // register service routes
 const staticPath = path.join(__dirname, 'public'); 
-app.use(express.static(staticPath));
+app.use(express.static(staticPath)); // Static contents
 
 // Run server
 app.listen(process.env.SERVER_ADDR);
