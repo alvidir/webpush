@@ -5,10 +5,10 @@ RUN apt update
 WORKDIR /app
 
 # installing dependencies
-COPY subscriber/package.json ./
+COPY notifier/package.json ./
 RUN npm --verbose install
 
-COPY ./subscriber/* .
+COPY ./* .
 # Index.ts may does nothing by itself
 # However its presence in the project's root ensures that the build script
 # will keep the directory structure of this project.
