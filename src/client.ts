@@ -2,7 +2,7 @@ import grpc from "grpc";
 import { PushRequest, PushResponse, Notification, Metadata } from "./proto/notifier_pb";
 import { NotifierClient } from "./proto/notifier_grpc_pb";
 
-const addr = process.env.SERVER_ADDR?? "localhost:9090";
+const addr = process.env.SERVER_ADDR?? "localhost:8080";
 var client = new NotifierClient(addr, grpc.credentials.createInsecure());;
 
 const notif: Notification = new Notification()
@@ -10,7 +10,7 @@ const notif: Notification = new Notification()
                                 .setBody("This notification comes from nowhere");
 
 const request: PushRequest = new PushRequest()
-                                .setUserId("60e210012182da59ec84110c")
+                                .setSubscriber("<subscriber_id>")
                                 .setData(notif);
 
 client.push(request, function(err: grpc.ServiceError | null, response: PushResponse) {

@@ -2,7 +2,8 @@ import dotenv from "dotenv";
 dotenv.config(); // init environment variables from .env file
 
 import grpc from "grpc";
-import {Notifier, NotifierService} from "./service";
+import {Notifier} from "./services";
+import {NotifierService} from "./proto/notifier_grpc_pb";
 
 const server = new grpc.Server({
     'grpc.max_receive_message_length': -1,
@@ -11,8 +12,8 @@ const server = new grpc.Server({
 
 server.addService(NotifierService, Notifier);
 
-const addr = process.env.SERVER_ADDR?? "localhost:8080";
+const addr = `localhost:${process.env.SERVER_PORT}`;
 server.bind(addr, grpc.ServerCredentials.createInsecure());
 
-console.log(`Server listening on port ${process.env.SERVER_ADDR}`);
+console.log(`server listening on port ${process.env.SERVER_PORT}`);
 server.start();

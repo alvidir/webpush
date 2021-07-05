@@ -2,9 +2,9 @@
   "name": "webpush",
   "version": "1.0.0",
   "description": "Web push notifications microservice",
-  "main": "main.ts",
   "scripts": {
-    "start": "ts-node src/main.ts",
+    "notifier": "ts-node src/notifier.ts",
+    "subscriber": "ts-node src/subscriber.ts",
     "client": "ts-node src/client.ts",
     "build": "tsc -p . --outDir ./build"
   },
@@ -20,18 +20,22 @@
   },
   "homepage": "https://github.com/alvidir/webpush#readme",
   "devDependencies": {
+    "@types/cors": "^2.8.10",
     "@types/dotenv": "^8.2.0",
+    "@types/express": "^4.17.12",
     "@types/google-protobuf": "^3.15.2",
-    "@types/web-push": "^3.3.2",
-    "@types/node": "^16.0.0",
     "@types/mongodb": "^3.6.19",
+    "@types/node": "^16.0.0",
+    "@types/web-push": "^3.3.2",
+    "cors": "^2.8.5",
     "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "grpc_tools_node_protoc_ts": "^5.3.0",
     "grpc-tools": "^1.9.1",
-    "grpc_tools_node_protoc_ts": "^4.1.2",
-    "typescript": "^4.3.5",
-    "web-push": "^3.4.5",
+    "mongodb": "^3.6.9",
     "ts-node": "^10.0.0",
-    "mongodb": "^3.6.9"
+    "typescript": "^4.3.5",
+    "web-push": "^3.4.5"
   },
   "dependencies": {
     "grpc": "^1.24.10"

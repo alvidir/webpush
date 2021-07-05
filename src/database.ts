@@ -2,6 +2,23 @@ import { MongoClient, ObjectID } from "mongodb";
 
 const uri = process.env.MONGO_URI?? "";
 
+const InsertSubscription = async (data: any): Promise<string> => {
+    const client = new MongoClient(uri, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+    });
+    
+    await client.connect();
+
+    const db = client.db("webpush");
+    const result = await db.collection("subscriptions")
+                            .insertOne(data);
+
+    await client.close();
+    return result.insertedId;
+    
+}
+
 const FindSubscription = async (id: string): Promise<any> => {
     const client = new MongoClient(uri, {
         useNewUrlParser: true,
@@ -16,13 +33,28 @@ const FindSubscription = async (id: string): Promise<any> => {
                      .find({ _id: new ObjectID(id) });
 
     let result: any | undefined = undefined;
-    if (cursor.count()) {
+    if (await cursor.count()) {
         result = await cursor.next();
     }
 
     await cursor.close();
     await client.close();
     return result;
+}
+
+const DeleteSubscription = async (id: string) => {
+    const client = new MongoClient(uri, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+    });
+    
+    await client.connect();
+
+    const db = client.db("webpush");
+    const result = await db.collection("subscriptions")
+                        .deleteOne({ id: id });
+
+    await client.close();
 }
 
 const InsertNotification = async (data: any): Promise<string> => {
@@ -42,6 +74,8 @@ const InsertNotification = async (data: any): Promise<string> => {
 }
 
 export {
+    InsertSubscription,
     FindSubscription,
+    DeleteSubscription,
     InsertNotification
 };

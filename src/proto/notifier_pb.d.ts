@@ -76,8 +76,8 @@ export namespace Notification {
 }
 
 export class PushRequest extends jspb.Message { 
-    getUserId(): string;
-    setUserId(value: string): PushRequest;
+    getSubscriber(): string;
+    setSubscriber(value: string): PushRequest;
 
 
     hasData(): boolean;
@@ -98,7 +98,7 @@ export class PushRequest extends jspb.Message {
 
 export namespace PushRequest {
     export type AsObject = {
-        userId: string,
+        subscriber: string,
         data?: Notification.AsObject,
     }
 }

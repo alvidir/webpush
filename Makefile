@@ -1,7 +1,7 @@
 # Global about the project
 VERSION=1.0.0
 REPO=alvidir
-PROJECT=webpush-notifier
+PROJECT=webpush
 
 proto:
 	protoc -I=. ./proto/*.proto \

@@ -594,7 +594,7 @@ proto.proto.PushRequest.prototype.toObject = function(opt_includeInstance) {
  */
 proto.proto.PushRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
-    userId: jspb.Message.getFieldWithDefault(msg, 1, ""),
+    subscriber: jspb.Message.getFieldWithDefault(msg, 1, ""),
     data: (f = msg.getData()) && proto.proto.Notification.toObject(includeInstance, f)
   };
 
@@ -634,7 +634,7 @@ proto.proto.PushRequest.deserializeBinaryFromReader = function(msg, reader) {
     switch (field) {
     case 1:
       var value = /** @type {string} */ (reader.readString());
-      msg.setUserId(value);
+      msg.setSubscriber(value);
       break;
     case 3:
       var value = new proto.proto.Notification;
@@ -670,7 +670,7 @@ proto.proto.PushRequest.prototype.serializeBinary = function() {
  */
 proto.proto.PushRequest.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
-  f = message.getUserId();
+  f = message.getSubscriber();
   if (f.length > 0) {
     writer.writeString(
       1,
@@ -689,10 +689,10 @@ proto.proto.PushRequest.serializeBinaryToWriter = function(message, writer) {
 
 
 /**
- * optional string user_id = 1;
+ * optional string subscriber = 1;
  * @return {string}
  */
-proto.proto.PushRequest.prototype.getUserId = function() {
+proto.proto.PushRequest.prototype.getSubscriber = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
 };
 
@@ -701,7 +701,7 @@ proto.proto.PushRequest.prototype.getUserId = function() {
  * @param {string} value
  * @return {!proto.proto.PushRequest} returns this
  */
-proto.proto.PushRequest.prototype.setUserId = function(value) {
+proto.proto.PushRequest.prototype.setSubscriber = function(value) {
   return jspb.Message.setProto3StringField(this, 1, value);
 };
 

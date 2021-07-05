@@ -4,9 +4,26 @@ services:
     ### BACKEND ###        
     notifier:
         container_name: notifier
-        image: alvidir/webpush-notifier:1.0.0
+        image: alvidir/webpush:1.0.0
         restart: always
         ports:
-            - 9090:8080
+            - 8080:8080
         env_file:
             - .env
+        environment: 
+            SERVER_PORT: 8080
+        command: ["node", "notifier.js"]
+
+    subscriber:
+        container_name: subscriber
+        image: alvidir/webpush:1.0.0
+        restart: always
+        ports:
+            - 3000:3000
+        volumes: 
+            - "./src/public:/app/public"
+        env_file:
+            - .env
+        environment: 
+            SERVER_PORT: 3000
+        command: ["node", "subscriber.js"]
