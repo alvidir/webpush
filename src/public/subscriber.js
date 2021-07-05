@@ -29,8 +29,6 @@ const subscribe = async () => {
         scope: "/",
     });
 
-    console.log("new service worker has been registered");
-
     const PUBLIC_VAPID_KEY = await getPublicKey();
     const subscription = await register.pushManager.subscribe({
         userVisibleOnly: true,
@@ -38,7 +36,6 @@ const subscribe = async () => {
     });
 
     const data = JSON.stringify(subscription)
-    console.log(data);
     
     fetch("/subscribe", {
         method: "POST",
@@ -47,8 +44,6 @@ const subscribe = async () => {
             "Content-Type": "application/json",
         }
     });
-
-    console.log("subscribed");
 }
 
 subscribe();

@@ -1,16 +1,28 @@
+import dotenv from "dotenv";
+dotenv.config(); // init environment variables from .env file
+
 import grpc from "grpc";
 import { PushRequest, PushResponse, Notification, Metadata } from "./proto/notifier_pb";
 import { NotifierClient } from "./proto/notifier_grpc_pb";
 
-const addr = process.env.SERVER_ADDR?? "localhost:8080";
-var client = new NotifierClient(addr, grpc.credentials.createInsecure());;
+const addr = `localhost:${process.env.SERVER_ADDR}`;
+var client = new NotifierClient(addr, grpc.credentials.createInsecure());
+
+const meta: Metadata = new Metadata()
+                            .setOrigin("localhost")
+                            .setCreatedAt(0)
+                            .setUrgency(0);
+
 
 const notif: Notification = new Notification()
                                 .setTitle("Hello world")
-                                .setBody("This notification comes from nowhere");
+                                .setBody("This notification comes from nowhere")
+                                .setUrl("github.com/alvidir")
+                                .setIconUrl("none")
+                                .setMeta(meta);
 
 const request: PushRequest = new PushRequest()
-                                .setSubscriber("<subscriber_id>")
+                                .setSubscriber("<subscription_id>")
                                 .setData(notif);
 
 client.push(request, function(err: grpc.ServiceError | null, response: PushResponse) {
