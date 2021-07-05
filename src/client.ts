@@ -5,7 +5,7 @@ import grpc from "grpc";
 import { PushRequest, PushResponse, Notification, Metadata } from "./proto/notifier_pb";
 import { NotifierClient } from "./proto/notifier_grpc_pb";
 
-const addr = `localhost:${process.env.SERVER_ADDR}`;
+const addr = `localhost:${process.env.SERVER_PORT}`;
 var client = new NotifierClient(addr, grpc.credentials.createInsecure());
 
 const meta: Metadata = new Metadata()

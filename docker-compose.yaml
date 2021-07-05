@@ -7,7 +7,7 @@ services:
         image: alvidir/webpush:1.0.0
         restart: always
         ports:
-            - 9090:8080
+            - 8080:8080
         env_file:
             - .env
         environment: 

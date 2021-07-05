@@ -7,8 +7,8 @@
     "subscriber": "ts-node src/subscriber.ts",
     "client": "ts-node src/client.ts",
     "build": "tsc -p . --outDir ./build",
-    "protojs": "grpc_tools_node_protoc --js_out=import_style=commonjs,binary:./src --grpc_out=./src --plugin=protoc-gen-grpc=`which grpc_tools_node_protoc_plugin` -I . ./src/proto/*.proto",
-    "protots": "protoc --plugin=protoc-gen-ts=./node_modules/.bin/protoc-gen-ts --ts_out=./src -I . ./src/proto/*.proto",
+    "protojs": "grpc_tools_node_protoc --js_out=import_style=commonjs,binary:. --grpc_out=. --plugin=protoc-gen-grpc=`which grpc_tools_node_protoc_plugin` -I . ./src/proto/*.proto",
+    "protots": "protoc --plugin=protoc-gen-ts=./node_modules/.bin/protoc-gen-ts --ts_out=. -I . ./src/proto/*.proto",
     "ptypes": "proto-loader-gen-types --keepCase --longs=String --enums=String --defaults --oneofs --grpcLib=@grpc/grpc-js --outDir=src/proto src/proto/*.proto && mv src/proto/proto/* src/proto/. && rm -rf src/proto/notifier.ts src/proto/proto",
     "proto": "npm run protojs && npm run protots && npm run ptypes"
   },
