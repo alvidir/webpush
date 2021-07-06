@@ -28,7 +28,7 @@ message Notification {
 
 // PushRequest for the notifier service
 message PushRequest {
-  string subscriber = 1;   // user the notification will be sent to
+  string subscription_id = 1;   // user the notification will be sent to
   Notification data = 3;
 }
 

@@ -21,13 +21,13 @@ class Notifier {
     private notRepo: NotificationsRepository;
     public impl: NotifierHandlers = {
         Push: async (call: ServerUnaryCall<PushRequest, PushResponse>, callback: sendUnaryData<PushResponse>) => {
-            if (!call.request.subscriber) {
+            if (!call.request.subscription_id) {
                 const err = new Error("subscriber is required");
                 callback(err, null);
                 return
             }
 
-            const id = call.request.subscriber;
+            const id = call.request.subscription_id;
             const subscription = await this.subRepo.FindSubscription(id);
             if (!subscription) {
                 const err = new Error("subscription not found");
@@ -43,18 +43,6 @@ class Notifier {
             }
             
             const data = call.request.data;
-            // const notification = {
-            //     title: data.title,
-            //     body: data.body,
-            //     url: data.url,
-            //     icon_url: data.icon_url,
-            //     meta: {
-            //         origin: data.meta?.origin,
-            //         created_at: data.meta?.created_at,
-            //         urgency: data.meta?.urgency,
-            //     }
-            // };
-    
             const result = await this.notRepo.InsertNotification(data);
             callback(null, {
                 notification_id: result,

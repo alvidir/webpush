@@ -35,15 +35,18 @@ const subscribe = async () => {
         applicationServerKey: PUBLIC_VAPID_KEY,
     });
 
-    const data = JSON.stringify(subscription)
-    
-    fetch("/subscribe", {
+    const data = JSON.stringify(subscription);
+    const response = await fetch("/subscribe", {
         method: "POST",
         body: data,
         headers: {
             "Content-Type": "application/json",
         }
     });
+
+    return response.json();
 }
 
-subscribe();
+subscribe().then(response => {
+    document.getElementById("subscription_id").innerHTML = response.id;
+});

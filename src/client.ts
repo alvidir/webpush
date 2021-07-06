@@ -21,8 +21,9 @@ const notif: Notification = new Notification()
                                 .setIconUrl("none")
                                 .setMeta(meta);
 
+const subscription_id = process.env.SUBSCRIPTION_ID?? "";
 const request: PushRequest = new PushRequest()
-                                .setSubscriber("<subscription_id>")
+                                .setSubscriptionId(subscription_id)
                                 .setData(notif);
 
 client.push(request, function(err: grpc.ServiceError | null, response: PushResponse) {
